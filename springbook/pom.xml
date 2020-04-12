@@ -21,14 +21,6 @@
 	<dependencies>
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	<dependency>
     <groupId>mysql</groupId>
     <artifactId>mysql-connector-java</artifactId>
@@ -64,10 +56,6 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-
-
-<!-- Raj raj  -->
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -80,8 +68,6 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
-	
-	
 
 	<build>
 		<plugins>
