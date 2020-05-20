@@ -16,7 +16,7 @@ public class MySqlCon{
 		Connection con=DriverManager.getConnection(  
 				connString,username,password);  
 		
-		//here sonoo is database name, root is username and password  
+		//here service is database name, root is user name and password  
 		Statement stmt=con.createStatement();  
 		ResultSet rs=stmt.executeQuery("select * from hero");  
 		while(rs.next())  
