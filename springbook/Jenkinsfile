@@ -1,0 +1,113 @@
+pipeline {
+    agent any
+
+    stages {
+       stage('Checkout') {
+                  steps {
+                      script {
+                          // Specify your Git repository URL
+                          def gitRepoUrl = 'https://github.com/dahalrr16/springbook.git'
+
+                          // Checkout the repository and switch to the desired branch or commit
+                          checkout([$class: 'GitSCM', branches: [[name: 'master']], userRemoteConfigs: [[url: gitRepoUrl]]])
+                      }
+                  }
+              }
+
+        stage('Build') {
+            steps {
+                script {
+                    // Build the Spring Boot application
+                    sh './springbook/mvnw clean package'
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build Docker image
+                    docker.build('ap111111-springbook:latest', '-f Dockerfile .')
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    // Push Docker image to a registry (replace REGISTRY_URL)
+                    docker.withRegistry('https://REGISTRY_URL', 'credentials-id') {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded!'
+
+            // Optionally, deploy your application or perform additional steps
+        }
+
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    // Checkout the source code
+                    checkout scm
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    // Build the Spring Boot application
+                    sh './mvnw clean package'
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build Docker image
+                    docker.build('your-docker-image-name:latest', '-f Dockerfile .')
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    // Push Docker image to a registry (replace REGISTRY_URL)
+                    docker.withRegistry('https://REGISTRY_URL', 'credentials-id') {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded!'
+
+            // Optionally, deploy your application or perform additional steps
+        }
+
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
