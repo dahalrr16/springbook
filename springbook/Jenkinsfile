@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Build the Spring Boot application
-                    sh './springbook mvn clean package'
+                    sh './mvn clean package'
                 }
             }
         }
