@@ -45,9 +45,7 @@ pipeline {
                 }
             }
         }
-    }
-
-    post {
+     post {
         success {
             echo 'Pipeline succeeded!'
 
@@ -59,58 +57,6 @@ pipeline {
         }
     }
 }
-pipeline {
-    agent any
-
-    stages {
-        stage('Checkout') {
-            steps {
-                script {
-                    // Checkout the source code
-                    checkout scm
-                }
-            }
-        }
-
-        stage('Build') {
-            steps {
-                script {
-                    // Build the Spring Boot application
-                    sh './mvnw clean package'
-                }
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    // Build Docker image
-                    docker.build('your-docker-image-name:latest', '-f Dockerfile .')
-                }
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    // Push Docker image to a registry (replace REGISTRY_URL)
-                    docker.withRegistry('https://REGISTRY_URL', 'credentials-id') {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
     }
 
-    post {
-        success {
-            echo 'Pipeline succeeded!'
-
-            // Optionally, deploy your application or perform additional steps
-        }
-
-        failure {
-            echo 'Pipeline failed!'
-        }
-    }
-}
+   
