@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {
                     echo 'Deploy the Spring Boot application'
-                sh   'sudo java -jar /var/lib/jenkins/workspace/AP111111-infra-springbook/springbook/target/pringbook-0.0.1-SNAPSHOT.jar'
+                sh   'java -jar ./target/pringbook-0.0.1-SNAPSHOT.jar'
                 //  sh 'cd ./springbook && mvn clean package && mvn spring-boot:run'
                 }
             }
