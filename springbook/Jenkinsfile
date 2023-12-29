@@ -28,8 +28,14 @@ pipeline {
             steps {
                 script {
                     echo 'Deploy the Spring Boot application'
-                sh 'pwd && nohup java -jar /var/lib/jenkins/workspace/AP111111-infra-springbook/springbook/target/springbook-0.0.1-SNAPSHOT.jar &&'
+            //    sh 'pwd && nohup java -jar /var/lib/jenkins/workspace/AP111111-infra-springbook/springbook/target/springbook-0.0.1-SNAPSHOT.jar &&'
                 //  sh 'cd ./springbook && mvn clean package && mvn spring-boot:run'
+                    def deployStatus = sh(script: 'nohup java -jar /var/lib/jenkins/workspace/AP111111-infra-springbook/springbook/target/springbook-0.0.1-SNAPSHOT.jar &', returnStatus: true)
+if (deployStatus == 0) {
+    echo 'Deployment successful'
+} else {
+    error 'Deployment failed'
+}
                 }
             }
         }
