@@ -28,8 +28,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker image
-                    echo 'Build Docker image skipped!'
-                 //   docker.build('ap111111-springbook:latest', '-f Dockerfile .')
+                    docker.build('ap111111-springbook:latest', '-f Dockerfile .')
                 }
             }
         }
@@ -38,9 +37,8 @@ pipeline {
             steps {
                 script {
                     // Push Docker image to a registry (replace REGISTRY_URL)
-                    echo 'Push Docker image to a registry!'
-                  //  docker.withRegistry('https://REGISTRY_URL', 'credentials-id') {
-                 //       dockerImage.push()
+                    docker.withRegistry('https://REGISTRY_URL', 'credentials-id') {
+                        dockerImage.push()
                     }
                 }
             }
