@@ -45,18 +45,5 @@ pipeline {
                 }
             }
         }
-     post {
-        success {
-            echo 'Pipeline succeeded!'
-
-            // Optionally, deploy your application or perform additional steps
-        }
-
-        failure {
-            echo 'Pipeline failed!'
-        }
     }
-}
-    }
-
-   
+	}
