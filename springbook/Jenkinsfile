@@ -24,25 +24,7 @@ pipeline {
         }
 
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    // Build Docker image
-                    docker.build('ap111111-springbook:latest', '-f Dockerfile .')
-                }
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    // Push Docker image to a registry (replace REGISTRY_URL)
-                    docker.withRegistry('https://REGISTRY_URL', 'credentials-id') {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
+   
     }
 
     post {
