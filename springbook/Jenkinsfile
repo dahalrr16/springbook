@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Build the Spring Boot application
-                    sh 'cd ./springbook && mvn clean package && mvn spring-boot:run'
+                    sh 'cd ./springbook && mvn clean package'
                 }
             }
         }
@@ -28,8 +28,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker image
-                      echo ' Build Docker image skipped'
-                  //  docker.build('ap111111-springbook:latest', '-f Dockerfile .')
+                    docker.build('ap111111-springbook:latest', '-f Dockerfile .')
                 }
             }
         }
@@ -38,12 +37,23 @@ pipeline {
             steps {
                 script {
                     // Push Docker image to a registry (replace REGISTRY_URL)
-                        echo ' Push Docker image to a registry skipped'
-              //      docker.withRegistry('https://REGISTRY_URL', 'credentials-id') {
-                //        dockerImage.push()
+                    docker.withRegistry('https://REGISTRY_URL', 'credentials-id') {
+                        dockerImage.push()
                     }
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded!'
+
+            // Optionally, deploy your application or perform additional steps
+        }
+
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
